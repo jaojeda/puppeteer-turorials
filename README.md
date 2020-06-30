@@ -1,1 +1,1 @@
-# puppeteer-turorials
+# puppeteer-tutorials
