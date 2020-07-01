@@ -11,20 +11,38 @@ beforeAll(async () => {
   await page.goto("http://localhost:3000/");
 });
 
-test("renders learn react link", async () => {
-  await page.waitForSelector(".App");
+// 1
+test("renders counter", async () => {
+  await page.waitForSelector(".header");
 
-  const header = await page.$eval(".App-header>p", e => e.innerHTML);
-  expect(header).toBe(`Edit <code>src/App.js</code> and save to reload.`);
+  const header = await page.$eval(".header", e => e.innerHTML);
+  expect(header).toBe("Counter");
+});
 
-  const link = await page.$eval(".App-header>a", e => {
-    return {
-      innerHTML: e.innerHTML,
-      href: e.href
-    };
-  });
-  expect(link.innerHTML).toBe(`Learn React`);
-  expect(link.href).toBe("https://reactjs.org/");
+// 2
+test("sets initial state to zero", async () => {
+  await page.waitForSelector(".counter-app");
+
+  const count = await page.$eval(".count", e => e.innerHTML);
+  expect(count).toBe("0");
+});
+
+// 3
+test("increments counter by 1", async () => {
+  await page.waitForSelector(".counter-app");
+
+  await page.click(".increment");
+  const count = await page.$eval(".count", e => e.innerHTML);
+  expect(count).toBe("1");
+});
+
+// 4
+test("decrements counter by 1", async () => {
+  await page.waitForSelector(".counter-app");
+
+  await page.click(".decrement");
+  const count = await page.$eval(".count", e => e.innerHTML);
+  expect(count).toBe("0");
 });
 
 afterAll(() => {
